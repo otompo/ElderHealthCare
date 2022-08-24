@@ -74,7 +74,9 @@ function ScreensNav(props) {
   // const authenticated = auth && auth.token !== "" && auth.user !== null;
 
   return (
-    <Stack.Navigator initialRouteName="Signin">
+    <Stack.Navigator
+    // initialRouteName="Signin"
+    >
       {/* {authenticated ? (
         <> */}
       <Stack.Screen
