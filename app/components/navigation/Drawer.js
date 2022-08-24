@@ -4,22 +4,10 @@ import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityI
 import { createDrawerNavigator } from "@react-navigation/drawer";
 // import Home from "../../screens/Home";
 import Dashboard from "../../screens/Dashboard";
-// import PosScreen from "../../screens/Pos";
 // import Settings from "../../screens/Settings";
-// import MySales from "../../screens/MySales";
 import Profile from "../../screens/Profile";
 import colors from "../../config/colors";
 import DrawerItems from "../../Layout/DrawerItems";
-// import ManageCategories from "../../screens/ManageCategories";
-// import ManageProducts from "../../screens/ManageProducts";
-// import ManageExpenses from "../../screens/ManageExpenses";
-// import ManageStaff from "../../screens/ManageStaff";
-// import ManageTrashStaff from "../../screens/ManageTrashStaff";
-// import ManageDailySales from "../../screens/ManageDailySales";
-// import ManageUserDailySales from "../../screens/ManageUserDailySales";
-// import ManageStatistics from "../../screens/ManageStatistics";
-// import ManageReports from "../../screens/ManageReports";
-// import ManagePurchase from "../../screens/ManagePurchase";
 
 const Drawer = createDrawerNavigator();
 

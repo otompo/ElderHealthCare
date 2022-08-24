@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Image, Text, View, StatusBar } from "react-native";
 import colors from "./config/colors";
 import Signin from "./screens/Signin";
-import Home from "./screens/Home";
+// import Home from "./screens/Home";
 import DrawRoot from "./components/navigation/Drawer";
 // import { CartProvider } from "./context/cartContext";
 import Signup from "./screens/Signup";
@@ -84,41 +84,7 @@ function ScreensNav(props) {
         component={DrawRoot}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen
-            name="ManageEditExpenses"
-            component={ManageEditExpenses}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="ManageProductsInstock"
-            component={ManageProductsInstock}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="ManageExpiredProducts"
-            component={ManageExpiredProducts}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="ManageProductsAboutToExpire"
-            component={ManageProductsAboutToExpire}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="ManageProductOutOfStock"
-            component={ManageProductOutOfStock}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="ManageProductsAboutOutOfStock"
-            component={ManageProductsAboutOutOfStock}
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen
-            name="ManageCartItems"
-            component={ManageCartItems}
-            options={{ headerShown: false }}
-          /> */}
+
       <Stack.Screen
         name="PatientDetials"
         component={PatientDetials}
