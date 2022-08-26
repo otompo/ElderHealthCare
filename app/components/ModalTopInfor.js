@@ -3,16 +3,27 @@ import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import colors from "../config/colors";
 import { FontAwesome } from "@expo/vector-icons";
 
-function ModalTopInfor({ title, handlePress }) {
+function ModalTopInfor({
+  title,
+  handlePress,
+  backgroundColor = "white",
+  borderRadius = 5,
+  color = "primary",
+}) {
   return (
     <View
-      style={{
-        // flex: 1,
-        color: colors.white,
-        backgroundColor: colors.white,
-        borderRadius: 5,
-        padding: 10,
-      }}
+      style={[
+        {
+          // flex: 1,
+          color: colors.white,
+
+          padding: 10,
+        },
+        {
+          backgroundColor: colors[backgroundColor],
+          borderRadius: borderRadius,
+        },
+      ]}
     >
       <View
         style={{
@@ -22,7 +33,7 @@ function ModalTopInfor({ title, handlePress }) {
         }}
       >
         <Text style={{ fontWeight: "bold", marginLeft: 10 }}>
-          <Text style={{ color: colors.primary }}>{title}</Text>
+          <Text style={{ color: colors[color] }}>{title}</Text>
         </Text>
 
         <TouchableOpacity onPress={handlePress} style={{ marginRight: 10 }}>

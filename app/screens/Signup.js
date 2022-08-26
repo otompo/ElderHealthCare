@@ -24,12 +24,12 @@ import { ImageBackground } from "react-native";
 var { width } = Dimensions.get("window");
 
 function Signup({ navigation }) {
-  const [name, setName] = useState("Sasco One GH");
-  const [contact, setContact] = useState("0245785624");
-  const [address, setAddress] = useState("Nandom Area One");
+  const [name, setName] = useState("");
+  const [contact, setContact] = useState("");
+  const [address, setAddress] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState(new Date());
-  const [email, setEmail] = useState("sasco@gmail.com");
-  const [password, setPassword] = useState("otompo123@");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   // const [state, setState] = useContext(AuthContext);
@@ -164,7 +164,6 @@ function Signup({ navigation }) {
               setValue={setEmail}
             />
             <AppTextInput
-              autoCapitalize="words"
               autoCorrect={false}
               icon="map-marker"
               placeholder="Address..."

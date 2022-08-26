@@ -31,9 +31,9 @@ const TopTabNavigator = createMaterialTopTabNavigator();
 function AccountScreen({ navigation }) {
   // const [auth, setAuth] = useContext(AuthContext);
   const [uploadImage, setUploadImage] = useState("");
-  const [name, setName] = useState("Sasco One GH");
-  const [email, setEmail] = useState("sasco@gmail.com");
-  const [contactNum, setContactNum] = useState("0245785647");
+  const [name, setName] = useState("Eben");
+  const [email, setEmail] = useState("eben@gmail.com");
+  const [contactNum, setContactNum] = useState("+44 7747 836322");
   const [image, setImage] = useState({});
   const [loading, setLoading] = useState(false);
 

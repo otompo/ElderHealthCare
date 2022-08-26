@@ -17,6 +17,7 @@ function DatePicker({
   subTitle,
   fontSize = 10,
   padding,
+  marginLeft = -5,
   maximumDate,
 }) {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
@@ -53,7 +54,10 @@ function DatePicker({
         />
         <TouchableOpacity
           onPress={showDatePicker}
-          style={[styles.dateButton, { padding: padding }]}
+          style={[
+            styles.dateButton,
+            { padding: padding, marginLeft: marginLeft },
+          ]}
         >
           <Text style={[styles.text, { fontSize: fontSize }]}>{titleOne}</Text>
           <Text style={styles.text}>{subTitle}</Text>

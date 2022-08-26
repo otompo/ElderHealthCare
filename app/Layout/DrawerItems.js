@@ -94,7 +94,7 @@ export default function DrawerItems(props) {
             <Text style={{ color: colors.white, fontWeight: "300" }}>
               Name:
             </Text>
-            {/* {name} */} Sasco
+            {/* {name} */} Eben
           </Text>
 
           <Text style={{ color: colors.white, fontSize: 14, paddingLeft: 10 }}>
@@ -102,7 +102,7 @@ export default function DrawerItems(props) {
               Contact:
             </Text>
             {/* {contactNum}  */}
-            0245785632
+            +44 7747 836322
           </Text>
 
           <Text style={{ color: colors.white, fontSize: 14, paddingLeft: 10 }}>
@@ -110,7 +110,7 @@ export default function DrawerItems(props) {
               Email:
             </Text>
             {/* {email} */}
-            sasco@gmail.com
+            eben@gmail.com
           </Text>
           {/* <Text style={{ color: colors.white, fontSize: 14, paddingLeft: 10 }}>
             <Text style={{ color: colors.white, fontWeight: "300" }}>

@@ -1,12 +1,19 @@
-import React, { useState } from "react";
-import { Text, View, StyleSheet, Image, Dimensions } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  Dimensions,
+  ScrollView,
+} from "react-native";
 import AppText from "../components/Auth/AppText";
 import CircleLogo from "../components/Auth/CircleLogo";
 import Header from "../components/Header";
 import SubHeader from "../components/SubHeader";
 import colors from "../config/colors";
 import { Divider } from "react-native-elements";
-import { ScrollView } from "react-native";
+
 import {
   actions,
   RichEditor,
@@ -27,10 +34,31 @@ function PatientDetials({ route }) {
   const patient = route.params;
   const richText = React.createRef();
   const [isModalVisible, setModalVisible] = useState(false);
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("");
+  const [email, setEmail] = useState("");
+  const [city, setCity] = useState("");
+  const [contact, setContact] = useState("");
+  const [height, setHeight] = useState("");
+  const [emergencyname, setEmergencyname] = useState("");
+  const [emergencycontact, setEmergencycontact] = useState("");
+  const [relationship, setRelationship] = useState("");
+
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
   const [index, setIndex] = React.useState(0);
+
+  useEffect(() => {
+    if (!patient) {
+      return;
+    } else {
+      setName(patient.name);
+      setAddress(patient.address);
+      setEmail(patient.email);
+      setCity(patient.city);
+    }
+  }, []);
 
   return (
     <>
@@ -110,8 +138,8 @@ function PatientDetials({ route }) {
                   {patient.height}
                 </AppText>
                 <AppText style={styles.subTitle} numberOfLines={2}>
-                  <Text style={styles.innerText}>State: </Text>
-                  {patient.states}
+                  <Text style={styles.innerText}>City: </Text>
+                  {patient.city}
                 </AppText>
                 <AppText style={styles.subTitle} numberOfLines={2}>
                   <Text style={styles.innerText}>Contact: </Text>
@@ -305,8 +333,8 @@ function PatientDetials({ route }) {
               margin={1}
               placeholder="Temperature..."
               keyboardType="numeric"
-              //   value={name}
-              //   setValue={setName}
+              value={name}
+              setValue={setName}
               width="50%"
             />
             <AppTextInput

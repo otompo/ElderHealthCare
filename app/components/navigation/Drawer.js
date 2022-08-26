@@ -8,6 +8,8 @@ import Dashboard from "../../screens/Dashboard";
 import Profile from "../../screens/Profile";
 import colors from "../../config/colors";
 import DrawerItems from "../../Layout/DrawerItems";
+import ManagePatients from "../../screens/ManagePatients";
+import MyAsignedPatient from "../../screens/MyAsignedPatient";
 
 const Drawer = createDrawerNavigator();
 
@@ -38,21 +40,6 @@ function DrawRoot() {
       }}
       drawerContent={(props) => <DrawerItems {...props} />}
     >
-      {/* <Drawer.Screen
-        name="POS"
-        component={PosScreen}
-        options={{
-          drawerIcon: ({ color }) => (
-            <MaterialCommunityIcons
-              name="cart-arrow-up"
-              size={25}
-              style={{ marginBottom: 3, alignSelf: "center" }}
-              color={color}
-            />
-          ),
-        }}
-      /> */}
-
       <Drawer.Screen
         name="Dashboard"
         component={Dashboard}
@@ -67,20 +54,35 @@ function DrawRoot() {
           ),
         }}
       />
-      {/* <Drawer.Screen
-        name="My Sales"
-        component={MySales}
+      <Drawer.Screen
+        name="Manage Patients"
+        component={ManagePatients}
         options={{
           drawerIcon: ({ color }) => (
             <MaterialCommunityIcons
-              name="currency-usd"
+              name="account-injury"
               size={25}
               style={{ marginBottom: 3, alignSelf: "center" }}
               color={color}
             />
           ),
         }}
-      /> */}
+      />
+
+      <Drawer.Screen
+        name="My Asigned Patients"
+        component={MyAsignedPatient}
+        options={{
+          drawerIcon: ({ color }) => (
+            <MaterialCommunityIcons
+              name="connection"
+              size={25}
+              style={{ marginBottom: 3, alignSelf: "center" }}
+              color={color}
+            />
+          ),
+        }}
+      />
       {/* {role.includes("admin") ? (
         <>
           <Drawer.Screen
