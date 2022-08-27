@@ -99,15 +99,15 @@ function Signin({ navigation }) {
     <>
       <Header HeaderTitle="Signin" justifyContent="center" />
       <ImageBackground
-        source={require("../assets/elderly.webp")}
+        source={require("../assets/elderly.png")}
         style={{ flex: 1, height: "100%" }}
         resizeMode="cover"
         blurRadius={2}
       >
         <View style={styles.logoContainer}>
-          <CircleLogo>
+          <CircleLogo height={160} width={160}>
             <Image
-              source={require("../assets/logo.png")}
+              source={require("../assets/icon.png")}
               style={{
                 height: 160,
                 width: 160,

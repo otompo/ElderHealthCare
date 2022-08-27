@@ -34,7 +34,7 @@ function CircleLogo({
           children
         ) : (
           <Image
-            source={require("../../assets/logo.png")}
+            source={require("../../assets/icon.png")}
             style={{
               width: 200,
               height: 200,

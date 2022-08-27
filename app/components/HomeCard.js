@@ -7,7 +7,6 @@ import {
   Dimensions,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import Icon from "react-native-vector-icons/FontAwesome";
 import colors from "../config/colors";
 var { width } = Dimensions.get("window");
 function HomeCard({ icon, title, onPress }) {

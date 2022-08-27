@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ElderHealthCare",
-    "slug": "ElderHealthCare",
+    "name": "ElderCare",
+    "slug": "eldercare",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./app/assets/icon.png",
@@ -18,13 +18,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.eldercare.eldercare",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./app/assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "softwareKeyboardLayoutMode": "pan",
+      "package": "com.eldercare.eldercare",
+      "versionCode":1
     },
     "web": {
       "favicon": "./app/assets/favicon.png"

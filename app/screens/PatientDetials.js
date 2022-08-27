@@ -34,31 +34,19 @@ function PatientDetials({ route }) {
   const patient = route.params;
   const richText = React.createRef();
   const [isModalVisible, setModalVisible] = useState(false);
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
-  const [email, setEmail] = useState("");
-  const [city, setCity] = useState("");
-  const [contact, setContact] = useState("");
-  const [height, setHeight] = useState("");
-  const [emergencyname, setEmergencyname] = useState("");
-  const [emergencycontact, setEmergencycontact] = useState("");
-  const [relationship, setRelationship] = useState("");
+  const [temperature, setTemperature] = useState("");
+  const [oxygen, setOxygen] = useState("");
+  const [pressure, setPressure] = useState("");
+  const [pulseRate, setPulseRate] = useState("");
+  const [weight, setWeight] = useState("");
+  const [respiratoryRate, setRespiratoryRate] = useState("");
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
   const [index, setIndex] = React.useState(0);
 
-  useEffect(() => {
-    if (!patient) {
-      return;
-    } else {
-      setName(patient.name);
-      setAddress(patient.address);
-      setEmail(patient.email);
-      setCity(patient.city);
-    }
-  }, []);
+  useEffect(() => {}, []);
 
   return (
     <>
@@ -333,8 +321,8 @@ function PatientDetials({ route }) {
               margin={1}
               placeholder="Temperature..."
               keyboardType="numeric"
-              value={name}
-              setValue={setName}
+              value={temperature}
+              setValue={setTemperature}
               width="50%"
             />
             <AppTextInput
@@ -342,8 +330,8 @@ function PatientDetials({ route }) {
               autoCorrect={false}
               placeholder="Pressure..."
               keyboardType="numeric"
-              //   value={contact}
-              //   setValue={setContact}
+              value={pressure}
+              setValue={setPressure}
             />
           </View>
           <View
@@ -353,8 +341,8 @@ function PatientDetials({ route }) {
               margin={1}
               placeholder="Pulse Rate..."
               keyboardType="numeric"
-              //   value={name}
-              //   setValue={setName}
+              value={pulseRate}
+              setValue={setPulseRate}
               width="50%"
             />
             <AppTextInput
@@ -362,8 +350,8 @@ function PatientDetials({ route }) {
               autoCorrect={false}
               placeholder="Weight..."
               keyboardType="numeric"
-              //   value={contact}
-              //   setValue={setContact}
+              value={weight}
+              setValue={setWeight}
             />
           </View>
           <View
@@ -373,8 +361,8 @@ function PatientDetials({ route }) {
               margin={1}
               placeholder="Respiration Rate..."
               keyboardType="numeric"
-              //   value={name}
-              //   setValue={setName}
+              value={respiratoryRate}
+              setValue={setRespiratoryRate}
               width="50%"
             />
             <AppTextInput
@@ -384,8 +372,8 @@ function PatientDetials({ route }) {
               autoCorrect={false}
               placeholder="Oxygen..."
               keyboardType="numeric"
-              //   value={contact}
-              //   setValue={setContact}
+              value={oxygen}
+              setValue={setOxygen}
             />
           </View>
           <View style={styles.richTextContainer}>
