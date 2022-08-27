@@ -42,63 +42,64 @@ function Signup({ navigation }) {
   // }, []);
 
   const handleSubmit = async () => {
-    setLoading(true);
-    if (!email || !password) {
-      if (Platform.OS === "android") {
-        ToastAndroid.showWithGravityAndOffset(
-          "All fields are required",
-          ToastAndroid.SHORT,
-          ToastAndroid.BOTTOM,
-          25,
-          50
-        );
-      } else {
-        AlertIOS.alert("All fields are required");
-      }
-      setLoading(false);
-      return;
-    }
-    try {
-      const { data } = await axios.post(`/api/auth/signin`, {
-        email,
-        password,
-      });
-      if (data.error) {
-        alert(data.error);
-        setLoading(false);
-      } else {
-        // setState(data);
-        // await AsyncStorage.setItem("@auth", JSON.stringify(data));
-        setEmail("");
-        setPassword("");
-        setLoading(false);
-        if (Platform.OS === "android") {
-          ToastAndroid.showWithGravityAndOffset(
-            "success",
-            ToastAndroid.SHORT,
-            ToastAndroid.BOTTOM,
-            25,
-            50
-          );
-        } else {
-          AlertIOS.alert("success");
-        }
-        navigation.navigate("Dashboard");
-      }
-    } catch (err) {
-      setLoading(false);
-      if (Platform.OS === "android") {
-        ToastAndroid.showWithGravityAndOffset(
-          err.response.data.message,
-          ToastAndroid.SHORT,
-          ToastAndroid.BOTTOM,
-          25,
-          50
-        );
-      } else {
-        AlertIOS.alert(err.response.data.message);
-      }
-    }
+    navigation.navigate("DrawRoot");
+    // setLoading(true);
+    // if (!email || !password) {
+    //   if (Platform.OS === "android") {
+    //     ToastAndroid.showWithGravityAndOffset(
+    //       "All fields are required",
+    //       ToastAndroid.SHORT,
+    //       ToastAndroid.BOTTOM,
+    //       25,
+    //       50
+    //     );
+    //   } else {
+    //     AlertIOS.alert("All fields are required");
+    //   }
+    //   setLoading(false);
+    //   return;
+    // }
+    // try {
+    //   const { data } = await axios.post(`/api/auth/signin`, {
+    //     email,
+    //     password,
+    //   });
+    //   if (data.error) {
+    //     alert(data.error);
+    //     setLoading(false);
+    //   } else {
+    //     // setState(data);
+    //     // await AsyncStorage.setItem("@auth", JSON.stringify(data));
+    //     setEmail("");
+    //     setPassword("");
+    //     setLoading(false);
+    //     if (Platform.OS === "android") {
+    //       ToastAndroid.showWithGravityAndOffset(
+    //         "success",
+    //         ToastAndroid.SHORT,
+    //         ToastAndroid.BOTTOM,
+    //         25,
+    //         50
+    //       );
+    //     } else {
+    //       AlertIOS.alert("success");
+    //     }
+    //     navigation.navigate("Dashboard");
+    //   }
+    // } catch (err) {
+    //   setLoading(false);
+    //   if (Platform.OS === "android") {
+    //     ToastAndroid.showWithGravityAndOffset(
+    //       err.response.data.message,
+    //       ToastAndroid.SHORT,
+    //       ToastAndroid.BOTTOM,
+    //       25,
+    //       50
+    //     );
+    //   } else {
+    //     AlertIOS.alert(err.response.data.message);
+    //   }
+    // }
   };
 
   return (

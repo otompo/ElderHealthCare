@@ -12,6 +12,7 @@ import DrawRoot from "./components/navigation/Drawer";
 // import { CartProvider } from "./context/cartContext";
 import Signup from "./screens/Signup";
 import PatientDetials from "./screens/PatientDetials";
+import DailyLiving from "./screens/DailyLiving";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -74,9 +75,7 @@ function ScreensNav(props) {
   // const authenticated = auth && auth.token !== "" && auth.user !== null;
 
   return (
-    <Stack.Navigator
-    // initialRouteName="Signin"
-    >
+    <Stack.Navigator initialRouteName="Signin">
       {/* {authenticated ? (
         <> */}
       <Stack.Screen
@@ -88,6 +87,11 @@ function ScreensNav(props) {
       <Stack.Screen
         name="PatientDetials"
         component={PatientDetials}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="DailyLiving"
+        component={DailyLiving}
         options={{ headerShown: false }}
       />
       <Stack.Screen

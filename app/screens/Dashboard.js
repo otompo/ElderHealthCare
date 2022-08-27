@@ -13,7 +13,11 @@ function Dashboard({ navigation }) {
       >
         <HomeCard icon="hospital-marker" title="Vital checks" />
         <HomeCard icon="pill" title="Medications" />
-        <HomeCard icon="alarm-bell" title="Live activity of Daily living" />
+        <HomeCard
+          onPress={() => navigation.navigate("DailyLiving")}
+          icon="alarm-bell"
+          title="Live activity of Daily living"
+        />
         <HomeCard
           icon="clipboard-text-clock"
           title="Activity History (summary)"
