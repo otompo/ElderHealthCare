@@ -15,7 +15,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import AppTextInput from "../components/Auth/AppTextInput";
 import SubmitButton from "../components/Button/SubmitButton";
 // import CircleLogo from "../components/Auth/CircleLogo";
-// import { AuthContext } from "../context/authContext";
+import { AuthContext } from "../context/authContext";
 import colors from "../config/colors";
 import axios from "axios";
 import CircleLogo from "../components/Auth/CircleLogo";
@@ -23,79 +23,76 @@ import Header from "../components/Header";
 var { width } = Dimensions.get("window");
 
 function Signin({ navigation }) {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("frank@gmail.com");
+  const [password, setPassword] = useState("otompo123@");
   const [loading, setLoading] = useState(false);
-  // const [state, setState] = useContext(AuthContext);
-  //   const { name, companyLogo } = useSettings();
+  const [state, setState] = useContext(AuthContext);
 
-  useEffect(() => {
-    // if (state) {
-    //   navigation.navigate("Dashboard");
-    // }
-  }, []);
+  // useEffect(() => {
+  //   if (state) {
+  //     navigation.navigate("Dashboard");
+  //   }
+  // }, []);
 
   const handleSubmit = async () => {
-    navigation.navigate("DrawRoot");
-    // setLoading(true);
-    // if (!email || !password) {
-    //   if (Platform.OS === "android") {
-    //     ToastAndroid.showWithGravityAndOffset(
-    //       "All fields are required",
-    //       ToastAndroid.SHORT,
-    //       ToastAndroid.BOTTOM,
-    //       25,
-    //       50
-    //     );
-    //   } else {
-    //     AlertIOS.alert("All fields are required");
-    //   }
-    //   setLoading(false);
-    //   return;
-    // }
-    // try {
-    //   const { data } = await axios.post(`/api/auth/signin`, {
-    //     email,
-    //     password,
-    //   });
-    //   if (data.error) {
-    //     alert(data.error);
-    //     setLoading(false);
-    //   } else {
-    //     // setState(data);
-    //     // await AsyncStorage.setItem("@auth", JSON.stringify(data));
-    //     setEmail("");
-    //     setPassword("");
-    //     setLoading(false);
-    //     if (Platform.OS === "android") {
-    //       ToastAndroid.showWithGravityAndOffset(
-    //         "success",
-    //         ToastAndroid.SHORT,
-    //         ToastAndroid.BOTTOM,
-    //         25,
-    //         50
-    //       );
-    //     } else {
-    //       AlertIOS.alert("success");
-    //     }
-    //     navigation.navigate("Dashboard");
-    //   }
-    // } catch (err) {
-    //   setLoading(false);
-    //   if (Platform.OS === "android") {
-    //     ToastAndroid.showWithGravityAndOffset(
-    //       err.response.data.message,
-    //       ToastAndroid.SHORT,
-    //       ToastAndroid.BOTTOM,
-    //       25,
-    //       50
-    //     );
-    //   } else {
-    //     AlertIOS.alert(err.response.data.message);
-    //   }
-    // }
+    setLoading(true);
+    if (!email || !password) {
+      if (Platform.OS === "android") {
+        ToastAndroid.showWithGravityAndOffset(
+          "All fields are required",
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM,
+          25,
+          50
+        );
+      } else {
+        AlertIOS.alert("All fields are required");
+      }
+      setLoading(false);
+      return;
+    }
+    try {
+      const { data } = await axios.post(`/api/auth/signin`, {
+        email,
+        password,
+      });
+      if (data.error) {
+        alert(data.error);
+        setLoading(false);
+      } else {
+        setState(data);
+        await AsyncStorage.setItem("@auth", JSON.stringify(data));
+        setEmail("");
+        setPassword("");
+        setLoading(false);
+        if (Platform.OS === "android") {
+          ToastAndroid.showWithGravityAndOffset(
+            "success",
+            ToastAndroid.SHORT,
+            ToastAndroid.BOTTOM,
+            25,
+            50
+          );
+        } else {
+          AlertIOS.alert("success");
+        }
+        // navigation.navigate("Home");
+      }
+    } catch (err) {
+      setLoading(false);
+      if (Platform.OS === "android") {
+        ToastAndroid.showWithGravityAndOffset(
+          err.response.data.message,
+          ToastAndroid.SHORT,
+          ToastAndroid.BOTTOM,
+          25,
+          50
+        );
+      } else {
+        AlertIOS.alert(err.response.data.message);
+      }
+    }
   };
-
   return (
     <>
       <Header HeaderTitle="Signin" justifyContent="center" />
@@ -149,7 +146,7 @@ function Signin({ navigation }) {
             onPress={handleSubmit}
             loading={loading}
           />
-          <Text center style={{ marginTop: 17 }}>
+          {/* <Text center style={{ marginTop: 17 }}>
             Don't have an account?{" "}
             <Text
               onPress={() => navigation.navigate("Signup")}
@@ -157,7 +154,7 @@ function Signin({ navigation }) {
             >
               Create Account
             </Text>
-          </Text>
+          </Text> */}
         </View>
       </ImageBackground>
     </>

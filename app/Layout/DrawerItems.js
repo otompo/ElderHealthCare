@@ -7,13 +7,13 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { AuthContext } from "../context/authContext";
+import { AuthContext } from "../context/authContext";
 import { Divider } from "react-native-elements";
-import moment from "moment";
 import colors from "../config/colors";
+import moment from "moment";
 
 export default function DrawerItems(props) {
-  // const [auth, setAuth] = useContext(AuthContext);
+  const [auth, setAuth] = useContext(AuthContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [role, setRole] = useState("");
@@ -27,20 +27,20 @@ export default function DrawerItems(props) {
     public_id: "",
   });
 
-  // useEffect(() => {
-  //   if (auth.user) {
-  //     const { name, email, image, contactNum, role, createdAt } = auth.user;
-  //     setName(name);
-  //     setEmail(email);
-  //     setRole(role);
-  //     setImage(image);
-  //     setCreatedAt(createdAt);
-  //     setContactNum(contactNum);
-  //   }
-  // }, [auth]);
+  useEffect(() => {
+    if (auth.user) {
+      const { name, email, image, contactNum, role, createdAt } = auth.user;
+      setName(name);
+      setEmail(email);
+      setRole(role);
+      setImage(image);
+      setCreatedAt(createdAt);
+      setContactNum(contactNum);
+    }
+  }, [auth]);
 
   const handleSignout = async () => {
-    // setAuth({ token: "", user: null });
+    setAuth({ token: "", user: null });
     await AsyncStorage.removeItem("@auth");
   };
 
@@ -94,30 +94,28 @@ export default function DrawerItems(props) {
             <Text style={{ color: colors.white, fontWeight: "300" }}>
               Name:
             </Text>
-            {/* {name} */} Eben
+            {name}
           </Text>
 
           <Text style={{ color: colors.white, fontSize: 14, paddingLeft: 10 }}>
             <Text style={{ color: colors.white, fontWeight: "300" }}>
               Contact:
             </Text>
-            {/* {contactNum}  */}
-            +44 7747 836322
+            {contactNum}
           </Text>
 
           <Text style={{ color: colors.white, fontSize: 14, paddingLeft: 10 }}>
             <Text style={{ color: colors.white, fontWeight: "300" }}>
               Email:
             </Text>
-            {/* {email} */}
-            eben@gmail.com
+            {email}
           </Text>
-          {/* <Text style={{ color: colors.white, fontSize: 14, paddingLeft: 10 }}>
+          <Text style={{ color: colors.white, fontSize: 14, paddingLeft: 10 }}>
             <Text style={{ color: colors.white, fontWeight: "300" }}>
               JoinDate:
             </Text>
             {moment(`${createdAt}`).format("LL")}
-          </Text> */}
+          </Text>
         </View>
       </View>
       <DrawerContentScrollView {...props}>

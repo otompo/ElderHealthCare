@@ -21,49 +21,58 @@ import SubmitButton from "../components/Button/SubmitButton";
 import AppTextInput from "../components/Auth/AppTextInput";
 import CircleLogo from "../components/Auth/CircleLogo";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-// import { AuthContext } from "../context/authContext";
+import { AuthContext } from "../context/authContext";
 import Header from "../components/Header";
+import {
+  actions,
+  RichEditor,
+  RichToolbar,
+} from "react-native-pell-rich-editor";
 // import { Avatar } from "react-native-paper";
 import moment from "moment";
 
 const TopTabNavigator = createMaterialTopTabNavigator();
 
 function AccountScreen({ navigation }) {
-  // const [auth, setAuth] = useContext(AuthContext);
+  // const richText = React.createRef();
+  const [auth, setAuth] = useContext(AuthContext);
   const [uploadImage, setUploadImage] = useState("");
-  const [name, setName] = useState("Eben");
-  const [email, setEmail] = useState("eben@gmail.com");
-  const [contactNum, setContactNum] = useState("+44 7747 836322");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [contactNum, setContactNum] = useState("");
+  // const [bio, setBio] = useState("");
   const [image, setImage] = useState({});
   const [loading, setLoading] = useState(false);
 
-  // useEffect(() => {
-  //   if (auth.user) {
-  //     const { name, contactNum, email } = auth && auth.user;
-  //     setName(name);
-  //     setContactNum(contactNum);
-  //     setEmail(email);
-  //     // setImage(profle_image);
-  //   }
-  // }, [auth]);
+  useEffect(() => {
+    if (auth.user) {
+      const { name, contactNum, email } = auth && auth.user;
+      setName(name);
+      setContactNum(contactNum);
+      setEmail(email);
+      // setBio(bio);
+      // setImage(profle_image);
+    }
+  }, [auth]);
 
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.put(`/api/user/updateprofile`, {
+      const { data } = await axios.put(`/api/profile/updateprofile`, {
         name,
         email,
         contactNum,
+        bio,
       });
 
-      // if (auth?.user?._id === data._id) {
-      //   setAuth({ ...auth, user: data });
-      //   let fromLocalStorage = JSON.parse(await AsyncStorage.getItem("@auth"));
-
-      //   fromLocalStorage.user = data;
-      //   await AsyncStorage.setItem("@auth", JSON.stringify(fromLocalStorage));
-
-      // }
+      if (auth?.user?._id === data._id) {
+        setAuth({ ...auth, user: data });
+        let fromLocalStorage = JSON.parse(await AsyncStorage.getItem("@auth"));
+        // console.log("First", fromLocalStorage);
+        fromLocalStorage.user = data;
+        await AsyncStorage.setItem("@auth", JSON.stringify(fromLocalStorage));
+        // console.log("SEC", fromLocalStorage);
+      }
 
       if (Platform.OS === "android") {
         ToastAndroid.showWithGravityAndOffset(
@@ -83,6 +92,10 @@ function AccountScreen({ navigation }) {
       setLoading(false);
     }
   };
+
+  // const richTextHandle = (bio) => {
+  //   setBio(bio);
+  // };
 
   const handleUpload = async () => {
     let permissionResult =
@@ -175,7 +188,6 @@ function AccountScreen({ navigation }) {
             value={email}
             setValue={setEmail}
           />
-
           <AppTextInput
             autoCapitalize="none"
             autoCorrect={false}
@@ -186,6 +198,43 @@ function AccountScreen({ navigation }) {
             setValue={setContactNum}
           />
 
+          {/* <View style={styles.richTextContainer}>
+            {bio && bio ? (
+              <>
+                <RichEditor
+                  ref={richText}
+                  onChange={richTextHandle}
+                  placeholder="Write your cool content here :)"
+                  androidHardwareAccelerationDisabled={true}
+                  style={styles.richTextEditorStyle}
+                  initialHeight={250}
+                  initialContentHTML="{bio} {bio} {bio} {bio}"
+                />
+                <RichToolbar
+                  editor={richText}
+                  selectedIconTint="#0288F5"
+                  iconTint="#FFFFFF"
+                  actions={[
+                    actions.removeFormat,
+                    actions.setBold,
+                    actions.setItalic,
+                    actions.insertBulletsList,
+                    actions.insertOrderedList,
+                    actions.insertLink,
+                    actions.setUnderline,
+                    actions.undo,
+                    actions.redo,
+                  ]}
+                  iconMap={{
+                    [actions.heading1]: ({ tintColor }) => (
+                      <Text style={[{ color: tintColor }]}>H1</Text>
+                    ),
+                  }}
+                  style={styles.richTextToolbarStyle}
+                />
+              </>
+            ) : null}
+          </View> */}
           <SubmitButton
             title="Update"
             onPress={handleSubmit}
@@ -390,5 +439,36 @@ const styles = StyleSheet.create({
   },
   headerLine: {
     margin: 20,
+  },
+  richTextContainer: {
+    display: "flex",
+    flexDirection: "column-reverse",
+    width: "100%",
+    marginBottom: 10,
+  },
+
+  richTextEditorStyle: {
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
+    borderWidth: 1,
+    borderColor: colors.primary,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.23,
+    shadowRadius: 2.62,
+    elevation: 4,
+    fontSize: 20,
+    overflow: "hidden",
+  },
+
+  richTextToolbarStyle: {
+    backgroundColor: colors.primary,
+    borderColor: colors.primary,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
+    borderWidth: 1,
   },
 });

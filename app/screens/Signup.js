@@ -42,7 +42,7 @@ function Signup({ navigation }) {
   // }, []);
 
   const handleSubmit = async () => {
-    navigation.navigate("DrawRoot");
+    // navigation.navigate("DrawRoot");
     // setLoading(true);
     // if (!email || !password) {
     //   if (Platform.OS === "android") {

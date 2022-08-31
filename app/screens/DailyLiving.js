@@ -16,7 +16,7 @@ function DailyLiving(props) {
       >
         <HomeCard icon="bed" title="Bedroom" />
         <HomeCard icon="sofa" title="Living room" />
-        <HomeCard icon="chair-rolling" title="Study area" />
+        <HomeCard icon="chair-school" title="Study area" />
         <HomeCard icon="shower" title="Bathroom" />
         <HomeCard icon="countertop" title="Kitchen" />
         <HomeCard icon="walk" title="Walkway " />

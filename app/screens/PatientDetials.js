@@ -6,6 +6,7 @@ import {
   Image,
   Dimensions,
   ScrollView,
+  FlatList,
 } from "react-native";
 import AppText from "../components/Auth/AppText";
 import CircleLogo from "../components/Auth/CircleLogo";
@@ -24,29 +25,88 @@ import ModalTopInfor from "../components/ModalTopInfor";
 import SubmitButton from "../components/Button/SubmitButton";
 import AppTextInput from "../components/Auth/AppTextInput";
 import ListItems from "../components/ListItems";
-import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
 import moment from "moment";
 import { Tab, TabView } from "@rneui/themed";
+import RenderHtml from "react-native-render-html";
+import { useWindowDimensions } from "react-native";
+
+import axios from "axios";
 
 var { width } = Dimensions.get("window");
 
 function PatientDetials({ route }) {
+  const { width } = useWindowDimensions();
   const patient = route.params;
   const richText = React.createRef();
-  const [isModalVisible, setModalVisible] = useState(false);
   const [temperature, setTemperature] = useState("");
   const [oxygen, setOxygen] = useState("");
   const [pressure, setPressure] = useState("");
   const [pulseRate, setPulseRate] = useState("");
   const [weight, setWeight] = useState("");
   const [respiratoryRate, setRespiratoryRate] = useState("");
+  const [comment, setComment] = useState("");
+  const [isModalVisible, setModalVisible] = useState(false);
+  const [success, setSucces] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [loadedComments, setLoadedComments] = useState([]);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
   const [index, setIndex] = React.useState(0);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    loadPatient();
+  }, [success]);
+
+  const loadPatient = async () => {
+    try {
+      const { data } = await axios.get(`/api/patient/${patient.username}`);
+      setLoadedComments(data.comments);
+      // setPatientId(data.patient._id);
+      // setFirstName(data.patient.firstName);
+      // setLastName(data.patient.lastName);
+      // setEmail(data.patient.email);
+      // setImage(data.patient.image);
+      // setPreDoctors(data.patient.doctor);
+      // setPreNurses(data.patient.nurse);
+      // setPreSymptoms(data.patient.symptoms);
+      // setContactNum(data.patient.contactNum);
+      // setHealthConcern(data.patient.healthConcern);
+      // setRelationship(data.patient.relationship);
+      // setEFullName(data.patient.efullName);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleSubmit = async () => {
+    try {
+      setSucces(true);
+      setLoading(true);
+      const { data } = await axios.post(`/api/comments/create/${patient._id}`, {
+        comment,
+        temperature,
+        bloodPressure: pressure,
+        respirationRate: respiratoryRate,
+        pulseRate,
+        weight,
+        oxygen,
+      });
+      setComment("");
+      setModalVisible(false);
+      setSucces(false);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+      setSucces(false);
+      setLoading(false);
+    }
+  };
+
+  const handleContent = (e) => {
+    setComment(e);
+  };
 
   return (
     <>
@@ -92,7 +152,7 @@ function PatientDetials({ route }) {
         <TabView.Item style={{ height: 100, width: "100%" }}>
           <View>
             <CircleLogo marginTop={40} height={100} width={100}>
-              <Image source={{ uri: patient.image.uri }} style={styles.image} />
+              <Image source={{ uri: patient.image.url }} style={styles.image} />
             </CircleLogo>
 
             <View style={styles.profileStyle}>
@@ -102,11 +162,11 @@ function PatientDetials({ route }) {
                 </AppText>
                 <AppText style={styles.subTitle} numberOfLines={1}>
                   <Text style={styles.innerText}>Name: </Text>
-                  {patient.name}
+                  {patient.firstName + `${" "}` + patient.lastName}
                 </AppText>
                 <AppText style={styles.subTitle} numberOfLines={1}>
                   <Text style={styles.innerText}>Matrital Status: </Text>
-                  {patient.matritalStatus}
+                  {patient.maritalstatus}
                 </AppText>
                 <AppText style={styles.subTitle} numberOfLines={1}>
                   <Text style={styles.innerText}>Date of Birth: </Text>
@@ -114,24 +174,26 @@ function PatientDetials({ route }) {
                 </AppText>
                 <AppText style={styles.subTitle} numberOfLines={1}>
                   <Text style={styles.innerText}>Gender: </Text>
-                  {patient.gender}
+                  {patient?.gender.map((d) => (
+                    <Text>{d}</Text>
+                  ))}
                 </AppText>
 
                 <AppText style={styles.subTitle} numberOfLines={2}>
                   <Text style={styles.innerText}>Age: </Text>
                   {patient.age} years
                 </AppText>
-                <AppText style={styles.subTitle} numberOfLines={2}>
+                {/* <AppText style={styles.subTitle} numberOfLines={2}>
                   <Text style={styles.innerText}>Height: </Text>
                   {patient.height}
-                </AppText>
+                </AppText> */}
                 <AppText style={styles.subTitle} numberOfLines={2}>
                   <Text style={styles.innerText}>City: </Text>
-                  {patient.city}
+                  {patient.region}
                 </AppText>
                 <AppText style={styles.subTitle} numberOfLines={2}>
                   <Text style={styles.innerText}>Contact: </Text>
-                  {patient.contact}
+                  {patient.contactNum}
                 </AppText>
                 <AppText style={styles.subTitle} numberOfLines={2}>
                   <Text style={styles.innerText}>Address: </Text>
@@ -148,11 +210,11 @@ function PatientDetials({ route }) {
                 </AppText>
                 <AppText style={styles.subTitle} numberOfLines={2}>
                   <Text style={styles.innerText}>Name: </Text>
-                  {patient.emergencyname}
+                  {patient.efullName}
                 </AppText>
                 <AppText style={styles.subTitle} numberOfLines={2}>
                   <Text style={styles.innerText}>Contact: </Text>
-                  {patient.emergencycontact}
+                  {patient.cellPhone}
                 </AppText>
                 <AppText style={styles.subTitle} numberOfLines={2}>
                   <Text style={styles.innerText}>Relationship: </Text>
@@ -170,129 +232,48 @@ function PatientDetials({ route }) {
               buttonTitle="+ ADD Health History"
               onPress={toggleModal}
             />
-            <ScrollView style={styles.healthHistory}>
-              {/* <AppText style={styles.title} numberOfLines={2}>
-                HEALTH HISTORY:
-              </AppText> */}
 
-              <ListItems
-                iconActive={false}
-                chevronActive={false}
-                mainTitleText="Added By: "
-                titleText="Temperature: "
-                subTitleText="Pressure: "
-                subSubTitleText="Respiration Rate: "
-                subSubSubTitleText="Oxygen: "
-                subSubSubSubTitleText="Weight: "
-                subSubSubSubSubTitleText="Date:"
-                mainTitle="Dr. Mensah"
-                title="20"
-                subTitle="70"
-                subSubTitle="50"
-                subSubSubTitle="80"
-                subSubSubSubTitle="60"
-                subSubSubSubSubTitle={moment(new Date()).format("LLL")}
-                subSubSubSubSubSubTitle="Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model"
-              />
-
-              <ListItems
-                iconActive={false}
-                chevronActive={false}
-                mainTitleText="Added By: "
-                titleText="Temperature: "
-                subTitleText="Pressure: "
-                subSubTitleText="Respiration Rate: "
-                subSubSubTitleText="Oxygen: "
-                subSubSubSubTitleText="Weight: "
-                subSubSubSubSubTitleText="Date:"
-                mainTitle="Dr. Mensah"
-                title="20"
-                subTitle="70"
-                subSubTitle="50"
-                subSubSubTitle="80"
-                subSubSubSubTitle="60"
-                subSubSubSubSubTitle={moment(new Date()).format("LLL")}
-                subSubSubSubSubSubTitle="Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model"
-              />
-
-              <ListItems
-                iconActive={false}
-                chevronActive={false}
-                mainTitleText="Added By: "
-                titleText="Temperature: "
-                subTitleText="Pressure: "
-                subSubTitleText="Respiration Rate: "
-                subSubSubTitleText="Oxygen: "
-                subSubSubSubTitleText="Weight: "
-                subSubSubSubSubTitleText="Date:"
-                mainTitle="Dr. Mensah"
-                title="20"
-                subTitle="70"
-                subSubTitle="50"
-                subSubSubTitle="80"
-                subSubSubSubTitle="60"
-                subSubSubSubSubTitle={moment(new Date()).format("LLL")}
-                subSubSubSubSubSubTitle="Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model"
-              />
-
-              <ListItems
-                iconActive={false}
-                chevronActive={false}
-                mainTitleText="Added By: "
-                titleText="Temperature: "
-                subTitleText="Pressure: "
-                subSubTitleText="Respiration Rate: "
-                subSubSubTitleText="Oxygen: "
-                subSubSubSubTitleText="Weight: "
-                subSubSubSubSubTitleText="Date:"
-                mainTitle="Dr. Mensah"
-                title="20"
-                subTitle="70"
-                subSubTitle="50"
-                subSubSubTitle="80"
-                subSubSubSubTitle="60"
-                subSubSubSubSubTitle={moment(new Date()).format("LLL")}
-                subSubSubSubSubSubTitle="Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model"
-              />
-              <ListItems
-                iconActive={false}
-                chevronActive={false}
-                mainTitleText="Added By: "
-                titleText="Temperature: "
-                subTitleText="Pressure: "
-                subSubTitleText="Respiration Rate: "
-                subSubSubTitleText="Oxygen: "
-                subSubSubSubTitleText="Weight: "
-                subSubSubSubSubTitleText="Date:"
-                mainTitle="Dr. Mensah"
-                title="20"
-                subTitle="70"
-                subSubTitle="50"
-                subSubSubTitle="80"
-                subSubSubSubTitle="60"
-                subSubSubSubSubTitle={moment(new Date()).format("LLL")}
-                subSubSubSubSubSubTitle="Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model"
-              />
-              <ListItems
-                iconActive={false}
-                chevronActive={false}
-                mainTitleText="Added By: "
-                titleText="Temperature: "
-                subTitleText="Pressure: "
-                subSubTitleText="Respiration Rate: "
-                subSubSubTitleText="Oxygen: "
-                subSubSubSubTitleText="Weight: "
-                subSubSubSubSubTitleText="Date:"
-                mainTitle="Dr. Mensah"
-                title="20"
-                subTitle="70"
-                subSubTitle="50"
-                subSubSubTitle="80"
-                subSubSubSubTitle="60"
-                subSubSubSubSubTitle={moment(new Date()).format("LLL")}
-                subSubSubSubSubSubTitle="Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model"
-              />
-            </ScrollView>
+            <FlatList
+              showsVerticalScrollIndicator={false}
+              data={loadedComments}
+              keyExtractor={(comment) => comment._id.toString()}
+              renderItem={({ item }) => (
+                <ListItems
+                  key={item._id}
+                  iconActive={false}
+                  chevronActive={false}
+                  mainTitleText="Added By: "
+                  titleText="Temperature: "
+                  subTitleText="Pressure: "
+                  subSubTitleText="Respiration Rate: "
+                  subSubSubTitleText="Oxygen: "
+                  subSubSubSubTitleText="Weight: "
+                  subSubSubSubSubTitleText="Date:"
+                  mainTitle={item?.commentBy?.name}
+                  title={item.bodyTemperature}
+                  subTitle={item.bloodPressure}
+                  subSubTitle={item.respirationRate}
+                  subSubSubTitle={item.oxygen}
+                  subSubSubSubTitle={item.weight}
+                  subSubSubSubSubTitle={moment(item.createdAt).format("dd LLL")}
+                  subSubSubSubSubSubTitle={
+                    <View
+                      style={{
+                        marginHorizontal: 150,
+                        // alignItems: "center",
+                      }}
+                    >
+                      <RenderHtml
+                        contentWidth={width}
+                        source={{
+                          html: `${item.content ? item.content : ""}`,
+                        }}
+                      />
+                    </View>
+                  }
+                />
+              )}
+            />
           </View>
         </TabView.Item>
         {/* <TabView.Item style={{ backgroundColor: "green", width: "100%" }}>
@@ -379,12 +360,12 @@ function PatientDetials({ route }) {
           <View style={styles.richTextContainer}>
             <RichEditor
               ref={richText}
-              //   onChange={richTextHandle}
+              onChange={handleContent}
               placeholder="Write your cool content here :)"
               androidHardwareAccelerationDisabled={true}
               style={styles.richTextEditorStyle}
               initialHeight={250}
-              //   initialContentHTML={description}
+              initialContentHTML={comment}
             />
             <RichToolbar
               editor={richText}
@@ -409,11 +390,7 @@ function PatientDetials({ route }) {
               style={styles.richTextToolbarStyle}
             />
           </View>
-          <SubmitButton
-            title="Save"
-            //     onPress={handleUpdateSubmit}
-            //     loading={loading}
-          />
+          <SubmitButton title="Save" onPress={handleSubmit} loading={loading} />
         </View>
       </Modal>
     </>

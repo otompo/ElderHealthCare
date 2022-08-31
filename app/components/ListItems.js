@@ -104,9 +104,9 @@ function ListItems({
             )}
           </View>
           {!!subSubSubSubSubSubTitle && (
-            <AppText style={styles.history} numberOfLines={15}>
+            <ListItem.Subtitle style={styles.subTitle}>
               {subSubSubSubSubSubTitle}
-            </AppText>
+            </ListItem.Subtitle>
           )}
         </ListItem.Content>
         {chevronActive && <ListItem.Chevron size={35} />}
@@ -121,7 +121,7 @@ export default ListItems;
 const styles = StyleSheet.create({
   container: {
     backgroundColor: colors.white,
-    marginBottom: 5,
+    marginBottom: 10,
     borderRadius: 15,
     shadowColor: "#171717",
     shadowOffset: { width: -1, height: 2 },

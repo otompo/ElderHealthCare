@@ -3,13 +3,11 @@ import { NavigationContainer } from "@react-navigation/native";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-// import { AuthContext, AuthProvider } from "./context/authContext";
+import { AuthContext, AuthProvider } from "./context/authContext";
 import { Image, Text, View, StatusBar } from "react-native";
 import colors from "./config/colors";
 import Signin from "./screens/Signin";
-// import Home from "./screens/Home";
 import DrawRoot from "./components/navigation/Drawer";
-// import { CartProvider } from "./context/cartContext";
 import Signup from "./screens/Signup";
 import PatientDetials from "./screens/PatientDetials";
 import DailyLiving from "./screens/DailyLiving";
@@ -19,14 +17,14 @@ const Tab = createBottomTabNavigator();
 
 export default function RootNavigation() {
   return (
-    // <AuthProvider>
-    <>
-      <StatusBar backgroundColor={colors.primary} />
-      <NavigationContainer>
-        <ScreensNav />
-      </NavigationContainer>
-    </>
-    // </AuthProvider>
+    <AuthProvider>
+      <>
+        <StatusBar backgroundColor={colors.primary} />
+        <NavigationContainer>
+          <ScreensNav />
+        </NavigationContainer>
+      </>
+    </AuthProvider>
   );
 }
 
@@ -71,45 +69,44 @@ function Tabs(props) {
 }
 
 function ScreensNav(props) {
-  // const [auth, setAuth] = useContext(AuthContext);
-  // const authenticated = auth && auth.token !== "" && auth.user !== null;
+  const [auth, setAuth] = useContext(AuthContext);
+  const authenticated = auth && auth.token !== "" && auth.user !== null;
 
   return (
     <Stack.Navigator initialRouteName="Signin">
-      {/* {authenticated ? (
-        <> */}
-      <Stack.Screen
-        name="DrawRoot"
-        component={DrawRoot}
-        options={{ headerShown: false }}
-      />
+      {authenticated ? (
+        <>
+          <Stack.Screen
+            name="DrawRoot"
+            component={DrawRoot}
+            options={{ headerShown: false }}
+          />
 
-      <Stack.Screen
-        name="PatientDetials"
-        component={PatientDetials}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="DailyLiving"
-        component={DailyLiving}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Signin"
-        component={Signin}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="Signup"
-        component={Signup}
-        options={{ headerShown: false }}
-      />
-      {/* </>
+          <Stack.Screen
+            name="PatientDetials"
+            component={PatientDetials}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="DailyLiving"
+            component={DailyLiving}
+            options={{ headerShown: false }}
+          />
+        </>
       ) : (
         <>
-         
+          <Stack.Screen
+            name="Signin"
+            component={Signin}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="Signup"
+            component={Signup}
+            options={{ headerShown: false }}
+          />
         </>
-      )} */}
+      )}
     </Stack.Navigator>
   );
 }
